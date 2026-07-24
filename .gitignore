@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+*.local
+
+# n8n self-host runtime data
+n8n/.n8n/
+n8n_data/
+
+# Generated benchmark artifacts are committed on purpose (see benchmarks/results/);
+# only ignore scratch runs:
+benchmarks/results/_scratch/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

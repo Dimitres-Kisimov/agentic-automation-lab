@@ -1,0 +1,3 @@
+# Normalize line endings so diffs stay clean across OSes.
+* text=auto eol=lf
+*.png binary

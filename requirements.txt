@@ -1,0 +1,15 @@
+# agentic-automation-lab — Python dependencies
+# The full-code agent runs with ZERO third-party deps in mock mode (stdlib only),
+# so tests and CI stay fast and key-free. Extras below are optional.
+
+# --- Core (none required for mock mode) ---
+# The agent, tools and use cases use only the Python standard library.
+
+# --- Live LLM providers (optional — only needed to run against a real model) ---
+anthropic>=0.40.0        # Claude tool-use runtime (set ANTHROPIC_API_KEY)
+
+# --- Benchmark charts (optional — only for regenerating figures) ---
+matplotlib>=3.8.0
+
+# --- Dev / tooling ---
+ruff>=0.6.0              # lint + format (used in CI)
