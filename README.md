@@ -2,6 +2,10 @@
 
 ![CI](https://github.com/Dimitres-Kisimov/agentic-automation-lab/actions/workflows/ci.yml/badge.svg)
 
+Picture a mid-size industrial distributor whose inside-sales desk hand-builds quotes from ~2,000 RFQ/order emails a week — roughly 17,000 hours and about €780k of labour a year. The flagship agent in here drafts each of those quotes in seconds; on a conservative "a rep still reviews every draft" model that's around **€625k a year of that time back** (estimates — the arithmetic is in the business case). That's the reason this repo exists; everything below is how it actually works.
+
+**Business case:** [docs/BUSINESS_CASE.md](docs/BUSINESS_CASE.md) lays out the situation, the numbers and the ROI on one page, and [deliverables/executive_onepager.pdf](deliverables/executive_onepager.pdf) is the version a manager can circulate. Both point back to the measured [decision guide](docs/DECISION_GUIDE.md) and [scorecard](benchmarks/results/scorecard.md).
+
 I kept reading that low-code tools like n8n are "good enough" for agentic automation and that you should reach for full code "when things get complex", without anyone showing the actual trade-off. So I built the same use case both ways and scored it. The use case is an RFQ agent: a furniture-distributor emails an order, and an LLM tool-use loop parses it, resolves each line to a SKU, checks stock, and drafts a quote. Off-catalog items get flagged instead of guessed.
 
 I wrote this while teaching myself how agentic loops actually work, mostly for internship applications, so the goal was to build the loop from scratch rather than lean on a framework that hides it.
