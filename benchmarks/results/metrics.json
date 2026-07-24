@@ -1,0 +1,49 @@
+{
+  "measured": {
+    "rfq_intake": {
+      "runs": 25,
+      "tool_calls": 12,
+      "steps": 13,
+      "latency_ms_median": 1.545,
+      "latency_ms_mean": 1.588,
+      "input_tokens_est": 13067,
+      "output_tokens_est": 503,
+      "final": "Quote Q-31618 drafted for procurement@acme-bau.de: 5 line item(s), total 911.44 EUR excl. VAT.",
+      "tool_call_sequence": [
+        "parse_email",
+        "lookup_sku",
+        "lookup_sku",
+        "lookup_sku",
+        "lookup_sku",
+        "lookup_sku",
+        "check_stock",
+        "check_stock",
+        "check_stock",
+        "check_stock",
+        "check_stock",
+        "draft_quote"
+      ]
+    },
+    "product_enrichment": {
+      "runs": 25,
+      "tool_calls": 3,
+      "steps": 4,
+      "latency_ms_median": 0.105,
+      "latency_ms_mean": 0.107,
+      "input_tokens_est": 889,
+      "output_tokens_est": 131,
+      "final": "Record is catalog-ready (category: fasteners).",
+      "tool_call_sequence": [
+        "classify_category",
+        "normalize_fields",
+        "validate_record"
+      ]
+    }
+  },
+  "scorecard_average": {
+    "n8n": 3.33,
+    "full": 4.44,
+    "pa": 2.33
+  },
+  "note": "latency is the mock-provider loop overhead; swap LLM_PROVIDER=anthropic for real model latency."
+}
