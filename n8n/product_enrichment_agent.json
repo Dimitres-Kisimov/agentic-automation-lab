@@ -1,0 +1,95 @@
+{
+  "name": "Product Enrichment Agent (low-code)",
+  "meta": {
+    "description": "Low-code build of the product-data enrichment agent. Mirrors src/agentic_lab/usecases/product_enrichment.py: an AI Agent that classifies a raw record's category, normalises its fields, and validates it against required-field rules, calling the same Python tools over HTTP."
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b1b11111-1111-4111-8111-1111111111aa",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [-40, 260]
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a product-data steward for a distributor's catalog. Given a raw product record, determine its category, normalise its fields to house style, and validate it against the required fields. Use tools; do not guess values you can derive. Report clearly whether the record is catalog-ready or needs human review."
+        }
+      },
+      "id": "a2b22222-2222-4222-8222-2222222222aa",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [280, 260]
+    },
+    {
+      "parameters": { "model": "claude-haiku-4-5-20251001", "options": {} },
+      "id": "c3b33333-3333-4333-8333-3333333333aa",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.2,
+      "position": [160, 520],
+      "credentials": { "anthropicApi": { "id": "REBIND_ON_IMPORT", "name": "Anthropic account" } }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Assign a catalog category to a product from its description. Input: description (string).",
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/classify_category",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"description\": {{ JSON.stringify($fromAI('description', 'product description', 'string')) }} }",
+        "options": {}
+      },
+      "id": "e5b55555-5555-4555-8555-5555555555aa",
+      "name": "classify_category",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [420, 520]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Standardise a raw product record (casing, units, price format). Input: record (object).",
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/normalize_fields",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"record\": {{ $fromAI('record', 'the product record to normalise', 'json') }} }",
+        "options": {}
+      },
+      "id": "f6b66666-6666-4666-8666-6666666666aa",
+      "name": "normalize_fields",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [600, 520]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Check a record against required fields and sanity rules. Input: record (object).",
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/validate_record",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"record\": {{ $fromAI('record', 'the normalised record to validate', 'json') }} }",
+        "options": {}
+      },
+      "id": "07b77777-7777-4777-8777-7777777777aa",
+      "name": "validate_record",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [780, 520]
+    }
+  ],
+  "connections": {
+    "When chat message received": { "main": [[{ "node": "AI Agent", "type": "main", "index": 0 }]] },
+    "Anthropic Chat Model": { "ai_languageModel": [[{ "node": "AI Agent", "type": "ai_languageModel", "index": 0 }]] },
+    "classify_category": { "ai_tool": [[{ "node": "AI Agent", "type": "ai_tool", "index": 0 }]] },
+    "normalize_fields": { "ai_tool": [[{ "node": "AI Agent", "type": "ai_tool", "index": 0 }]] },
+    "validate_record": { "ai_tool": [[{ "node": "AI Agent", "type": "ai_tool", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}
