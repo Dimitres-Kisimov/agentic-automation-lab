@@ -1,6 +1,6 @@
 # Agentic Automation Lab
 
-![CI](https://github.com/Dimikissimov/agentic-automation-lab/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Dimitres-Kisimov/agentic-automation-lab/actions/workflows/ci.yml/badge.svg)
 
 I kept reading that low-code tools like n8n are "good enough" for agentic automation and that you should reach for full code "when things get complex", without anyone showing the actual trade-off. So I built the same use case both ways and scored it. The use case is an RFQ agent: a furniture-distributor emails an order, and an LLM tool-use loop parses it, resolves each line to a SKU, checks stock, and drafts a quote. Off-catalog items get flagged instead of guessed.
 
