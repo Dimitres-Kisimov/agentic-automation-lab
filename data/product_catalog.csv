@@ -1,0 +1,25 @@
+sku,name,description,category,brand,uom,unit_price_eur,stock_qty,lead_time_days
+FAS-0008-40,Hex bolt M8x40 zinc,M8x40 hex head bolt zinc plated DIN 933,fasteners,Würth,PCS,0.89,5000,3
+FAS-0010-50,Hex bolt M10x50 zinc,M10x50 hex head bolt zinc plated DIN 933,fasteners,Würth,PCS,1.24,3200,3
+FAS-NUT-08,Hex nut M8 zinc,M8 hex nut zinc plated DIN 934,fasteners,Würth,PCS,0.12,20000,2
+FAS-WAS-08,Washer M8 zinc,M8 flat washer zinc plated DIN 125,fasteners,Würth,PCS,0.04,50000,2
+FAS-ANC-10,Wall anchor 10mm nylon,Nylon wall plug anchor 10mm for masonry,fasteners,Würth,PCS,0.09,15000,4
+FAS-SCR-45,Chipboard screw 4x45,Chipboard wood screw 4.0x45 yellow zinc,fasteners,Würth,PCS,0.06,40000,2
+PWR-IMP-18,Cordless impact driver 18V,18V brushless cordless impact driver body,power tools,Würth,PCS,189.00,60,7
+PWR-DRL-18,Cordless drill 18V,18V cordless drill driver 2-speed with battery,power tools,Würth,PCS,159.00,45,7
+PWR-GRD-125,Angle grinder 125mm,125mm angle grinder 900W corded,power tools,Würth,PCS,84.50,80,5
+PWR-BAT-40,Battery pack 18V 4Ah,18V 4.0Ah lithium-ion battery pack,power tools,Würth,PCS,64.00,120,7
+ABR-CUT-125,Cutting disc 125mm,125mm metal cutting disc 1mm inox,abrasives,Würth,PCS,0.79,8000,3
+ABR-FLP-125,Flap disc 125mm P60,125mm flap disc grit 60 zirconia,abrasives,Würth,PCS,1.35,6000,4
+ABR-SND-P120,Sanding sheet P120,Sanding sheet 230x280 grit 120,abrasives,Würth,PCS,0.35,10000,3
+CHM-SIL-310,Silicone sealant transparent,Neutral silicone sealant 310ml transparent,chemicals,Würth,PCS,4.90,2500,5
+CHM-ADH-050,Fast adhesive gel 50g,Cyanoacrylate fast adhesive gel 50g,chemicals,Würth,PCS,7.20,1800,5
+CHM-LUB-500,Multi lubricant spray 500ml,Multi-purpose lubricant penetrating spray 500ml,chemicals,Würth,PCS,8.40,3000,4
+CHM-CLN-500,Brake cleaner 500ml,Brake and parts cleaner spray 500ml,chemicals,Würth,PCS,3.60,4000,4
+PPE-GLV-CR-L,Cut-resistant gloves L,Cut-resistant gloves level C size L,ppe,Würth,PAIR,3.10,7000,3
+PPE-GLV-CR-M,Cut-resistant gloves M,Cut-resistant gloves level C size M,ppe,Würth,PAIR,3.10,6500,3
+PPE-GOG-01,Safety goggles clear,Safety goggles clear anti-fog EN166,ppe,Würth,PCS,4.20,5000,3
+PPE-EAR-01,Ear plugs SNR37,Disposable ear plugs SNR 37 dB pair,ppe,Würth,PAIR,0.18,30000,2
+HND-WRN-SET,Combination wrench set 8-19,Combination spanner set 8-19mm 8-piece,hand tools,Würth,SET,39.90,300,6
+HND-PLR-180,Combination pliers 180mm,Combination pliers 180mm VDE insulated,hand tools,Würth,PCS,14.50,900,5
+HND-SCR-SET,Screwdriver set 6pc,Screwdriver set 6-piece slotted and PH,hand tools,Würth,SET,22.00,650,5

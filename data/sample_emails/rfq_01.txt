@@ -1,0 +1,18 @@
+From: procurement@acme-bau.de
+Subject: RFQ - spring maintenance order
+
+Hello Würth team,
+
+please send us a quote for the following items for delivery to our Heilbronn site:
+
+10 x M8x40 hex bolts zinc
+4 x cordless impact driver 18V
+20 x cut-resistant gloves size L
+6 x cutting disc 125mm inox
+2 x combination wrench set 8-19
+
+We would need delivery within two weeks if possible.
+
+Best regards,
+Markus Weber
+ACME Bau GmbH
