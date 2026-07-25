@@ -1,7 +1,7 @@
 # Credits & attribution
 
 ## Code
-All application code © 2026 Dimitres Kisimov, MIT-licensed (see `LICENSE`).
+All application code © 2026 Dimitres Kisimov, all rights reserved (see `LICENSE`). Third-party libraries remain under their own licenses.
 
 ## Data
 The product catalog (`data/product_catalog.csv`) and sample RFQ emails

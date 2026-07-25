@@ -75,4 +75,4 @@ A parallel n8n run against the *same* emails so I can put measured latency and c
 
 ---
 
-MIT © 2026 Dimitres Kisimov. All data is synthetic.
+© 2026 Dimitres Kisimov — all rights reserved; published for portfolio review. See LICENSE. All data is synthetic.
