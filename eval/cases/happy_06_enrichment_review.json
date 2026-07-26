@@ -1,0 +1,14 @@
+{
+  "id": "happy_06_enrichment_review",
+  "mode": "happy_path",
+  "usecase": "product_enrichment",
+  "provider": "mock",
+  "expect": {
+    "caught_by": null,
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "human review"
+  },
+  "input": "{\"name\": \"flap disc 125mm\", \"uom\": \"pc\", \"unit_price_eur\": \"n/a\", \"description\": \"flap disc 125 mm for angle grinder\"}",
+  "note": "A needs-human-review verdict is a correct answer, not a refusal."
+}

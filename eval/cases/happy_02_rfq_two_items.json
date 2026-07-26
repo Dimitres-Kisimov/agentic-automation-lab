@@ -1,0 +1,13 @@
+{
+  "id": "happy_02_rfq_two_items",
+  "mode": "happy_path",
+  "usecase": "rfq_intake",
+  "provider": "mock",
+  "expect": {
+    "caught_by": null,
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "EUR"
+  },
+  "input": "From: buyer@nord-metall.example\nSubject: RFQ wk32\n\n2 x cordless impact driver 18V\n50 x cut-resistant gloves size L\n\nBest regards,\nNord Metall"
+}

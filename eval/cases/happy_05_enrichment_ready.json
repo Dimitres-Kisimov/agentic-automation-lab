@@ -1,0 +1,13 @@
+{
+  "id": "happy_05_enrichment_ready",
+  "mode": "happy_path",
+  "usecase": "product_enrichment",
+  "provider": "mock",
+  "expect": {
+    "caught_by": null,
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "catalog-ready"
+  },
+  "input_builder": "enrichment_demo"
+}

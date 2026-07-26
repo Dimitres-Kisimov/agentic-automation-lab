@@ -1,0 +1,14 @@
+{
+  "id": "out_01_malformed_answer",
+  "mode": "malformed_output",
+  "usecase": "rfq_intake",
+  "provider": "no_quote",
+  "expect": {
+    "caught_by": "output.schema",
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "Order processed"
+  },
+  "input": "From: x@y.example\nSubject: rfq\n\n10 x M8x40 hex bolts zinc\n",
+  "note": "Model claims success without ever drafting a quote; schema guard flags it."
+}

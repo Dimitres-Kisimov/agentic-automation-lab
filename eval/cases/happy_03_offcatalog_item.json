@@ -1,0 +1,14 @@
+{
+  "id": "happy_03_offcatalog_item",
+  "mode": "happy_path",
+  "usecase": "rfq_intake",
+  "provider": "mock",
+  "expect": {
+    "caught_by": null,
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "manual review"
+  },
+  "input": "From: x@y.example\nSubject: rfq\n\n5 x titanium coated left-handed drill bit 3mm\n10 x M8x40 hex bolts zinc\n",
+  "note": "Flagging an off-catalog item for review must NOT read as a refusal."
+}

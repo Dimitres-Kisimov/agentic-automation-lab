@@ -1,0 +1,14 @@
+{
+  "id": "loop_02_budget",
+  "mode": "call_budget",
+  "usecase": "rfq_intake",
+  "provider": "budget_burner",
+  "expect": {
+    "caught_by": "loop.tool_budget",
+    "catchable": true,
+    "behavior": "break",
+    "final_contains": null
+  },
+  "input": "From: x@y.example\nSubject: rfq\n\n10 x M8x40 hex bolts zinc\n",
+  "note": "Distinct arguments every turn dodge the repeat guard; the budget stops it."
+}

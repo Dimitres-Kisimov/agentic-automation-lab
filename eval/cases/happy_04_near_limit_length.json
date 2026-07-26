@@ -1,0 +1,14 @@
+{
+  "id": "happy_04_near_limit_length",
+  "mode": "happy_path",
+  "usecase": "rfq_intake",
+  "provider": "mock",
+  "expect": {
+    "caught_by": null,
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "EUR"
+  },
+  "input_builder": "near_limit_email",
+  "note": "Just under the length cap; the max-length guard must not false-trigger."
+}

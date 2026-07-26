@@ -1,0 +1,13 @@
+{
+  "id": "happy_01_rfq_demo",
+  "mode": "happy_path",
+  "usecase": "rfq_intake",
+  "provider": "mock",
+  "expect": {
+    "caught_by": null,
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "EUR"
+  },
+  "input_builder": "rfq_demo"
+}

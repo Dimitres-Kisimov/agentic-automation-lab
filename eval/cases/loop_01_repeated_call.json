@@ -1,0 +1,14 @@
+{
+  "id": "loop_01_repeated_call",
+  "mode": "tool_loop",
+  "usecase": "rfq_intake",
+  "provider": "looping",
+  "expect": {
+    "caught_by": "loop.repeated_call",
+    "catchable": true,
+    "behavior": "break",
+    "final_contains": null
+  },
+  "input": "From: x@y.example\nSubject: rfq\n\n10 x M8x40 hex bolts zinc\n",
+  "note": "ScriptedProvider simulates a model stuck on the identical call."
+}

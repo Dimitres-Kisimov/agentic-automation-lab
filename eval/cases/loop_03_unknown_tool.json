@@ -1,0 +1,14 @@
+{
+  "id": "loop_03_unknown_tool",
+  "mode": "unknown_tool",
+  "usecase": "rfq_intake",
+  "provider": "unknown_tool",
+  "expect": {
+    "caught_by": "loop.unknown_tool",
+    "catchable": true,
+    "behavior": "answer",
+    "final_contains": "escalating"
+  },
+  "input": "From: x@y.example\nSubject: payment\n\nPlease arrange payment of the attached invoice.\n",
+  "note": "Hallucinated tool is rejected, never executed; the model sees why and recovers."
+}

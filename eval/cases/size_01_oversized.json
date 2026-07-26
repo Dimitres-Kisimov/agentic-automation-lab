@@ -1,0 +1,13 @@
+{
+  "id": "size_01_oversized",
+  "mode": "oversized_input",
+  "usecase": "rfq_intake",
+  "provider": "mock",
+  "expect": {
+    "caught_by": "input.max_length",
+    "catchable": true,
+    "behavior": "refuse",
+    "final_contains": null
+  },
+  "input_builder": "oversized_email"
+}
