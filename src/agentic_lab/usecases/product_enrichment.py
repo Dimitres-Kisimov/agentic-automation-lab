@@ -15,6 +15,7 @@ from typing import Any
 
 from .. import tools
 from ..agent import Agent, ToolRegistry
+from ..guardrails import GuardSet
 from ..llm import LLMProvider, LLMResponse, ToolCall, make_provider
 
 SYSTEM = (
@@ -81,9 +82,10 @@ def mock_policy(messages: list[dict[str, Any]], _tools: Any) -> LLMResponse:
     return LLMResponse(text=f"Record needs human review: {'; '.join(problems)}.", stop_reason="end")
 
 
-def build_agent(provider: LLMProvider | None = None, max_steps: int = 12) -> Agent:
+def build_agent(provider: LLMProvider | None = None, max_steps: int = 12,
+                guards: GuardSet | None = None) -> Agent:
     provider = provider or make_provider("mock", policy=mock_policy)
-    return Agent(provider, build_registry(), SYSTEM, max_steps=max_steps)
+    return Agent(provider, build_registry(), SYSTEM, max_steps=max_steps, guards=guards)
 
 
 def demo_input() -> str:

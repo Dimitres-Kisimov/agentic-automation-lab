@@ -22,6 +22,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
+from .guardrails import GuardSet, GuardVerdict
 from .llm import LLMProvider, LLMResponse, ToolSpec
 
 
@@ -76,8 +77,9 @@ class AgentRun:
     latency_s: float
     input_tokens: int
     output_tokens: int
-    stopped: str                     # "answered" | "max_steps"
+    stopped: str                     # "answered" | "max_steps" | "input_blocked" | "guard_break"
     state: dict[str, Any] = field(default_factory=dict)  # accumulated tool outputs
+    guard_events: list[dict[str, Any]] = field(default_factory=list)  # every guard decision
 
     def summary(self) -> dict[str, Any]:
         return {
@@ -85,6 +87,7 @@ class AgentRun:
             "n_tool_calls": len(self.tool_calls), "latency_s": round(self.latency_s, 4),
             "input_tokens": self.input_tokens, "output_tokens": self.output_tokens,
             "stopped": self.stopped,
+            "guards_triggered": sum(1 for e in self.guard_events if e["triggered"]),
         }
 
 
@@ -92,19 +95,48 @@ class Agent:
     """Runs the tool-use loop for a given provider + tool registry."""
 
     def __init__(self, provider: LLMProvider, registry: ToolRegistry,
-                 system: str, max_steps: int = 12) -> None:
+                 system: str, max_steps: int = 12, guards: GuardSet | None = None) -> None:
         self.provider = provider
         self.registry = registry
         self.system = system
         self.max_steps = max_steps
+        self.guards = guards  # optional — None keeps the loop exactly as before
 
     def run(self, user_input: str, on_event: Callable[[str, Any], None] | None = None) -> AgentRun:
         messages: list[dict[str, Any]] = [{"role": "user", "content": user_input}]
         tool_calls: list[str] = []
+        call_history: list[tuple[str, str]] = []   # (tool, canonical-args) per attempt
+        guard_events: list[dict[str, Any]] = []
         state: dict[str, Any] = {}
         in_tok = out_tok = steps = 0
         t0 = time.perf_counter()
         emit = on_event or (lambda *_: None)
+
+        def record(verdicts: list[GuardVerdict]) -> GuardVerdict | None:
+            """Trace every guard decision; return the verdict to act on
+            (break outranks block; allow/flag never interrupt)."""
+            for v in verdicts:
+                guard_events.append(v.as_dict())
+                emit("guard", v.as_dict())
+            for action in ("break", "block"):
+                for v in verdicts:
+                    if v.triggered and v.action == action:
+                        return v
+            return None
+
+        def finish(final: str, stopped: str) -> AgentRun:
+            return AgentRun(final=final, messages=messages, steps=steps,
+                            tool_calls=tool_calls, latency_s=time.perf_counter() - t0,
+                            input_tokens=in_tok, output_tokens=out_tok,
+                            stopped=stopped, state=state, guard_events=guard_events)
+
+        if self.guards is not None:
+            hit = record(self.guards.check_input(user_input))
+            if hit is not None:
+                return finish(f"Input rejected by guard [{hit.guard}]: {hit.reason}. "
+                              "Routed to human review.", "input_blocked")
+
+        known_tools = {s.name for s in self.registry.specs}
 
         while steps < self.max_steps:
             steps += 1
@@ -117,9 +149,21 @@ class Agent:
                                  "tool_calls": resp.tool_calls})
                 for tc in resp.tool_calls:
                     emit("tool_call", {"name": tc.name, "arguments": tc.arguments})
-                    result = self.registry.execute(tc.name, tc.arguments)
+                    hit = None
+                    if self.guards is not None:
+                        hit = record(self.guards.check_tool_call(
+                            tc.name, tc.arguments, known_tools, call_history))
+                        call_history.append(
+                            (tc.name, json.dumps(tc.arguments, sort_keys=True, default=str)))
+                    if hit is not None and hit.action == "break":
+                        return finish(f"(stopped by guard [{hit.guard}]: {hit.reason})",
+                                      "guard_break")
+                    if hit is not None:  # "block": refuse this call, let the model see why
+                        result: Any = {"error": f"call rejected by guard [{hit.guard}]: {hit.reason}"}
+                    else:
+                        result = self.registry.execute(tc.name, tc.arguments)
+                        state[tc.name] = result
                     tool_calls.append(tc.name)
-                    state[tc.name] = result
                     emit("tool_result", {"name": tc.name, "result": result})
                     messages.append({"role": "tool", "tool_call_id": tc.id,
                                      "name": tc.name, "content": json.dumps(result, default=str)})
@@ -127,16 +171,12 @@ class Agent:
 
             # No tool call -> the agent has answered.
             messages.append({"role": "assistant", "content": resp.text})
+            if self.guards is not None:
+                record(self.guards.check_output(resp.text or "", state))  # flags only
             emit("final", resp.text)
-            return AgentRun(final=resp.text or "", messages=messages, steps=steps,
-                            tool_calls=tool_calls, latency_s=time.perf_counter() - t0,
-                            input_tokens=in_tok, output_tokens=out_tok,
-                            stopped="answered", state=state)
+            return finish(resp.text or "", "answered")
 
-        return AgentRun(final="(stopped: reached max_steps)", messages=messages, steps=steps,
-                        tool_calls=tool_calls, latency_s=time.perf_counter() - t0,
-                        input_tokens=in_tok, output_tokens=out_tok,
-                        stopped="max_steps", state=state)
+        return finish("(stopped: reached max_steps)", "max_steps")
 
 
 def last_tool_result(messages: list[dict[str, Any]], tool_name: str) -> Any:
