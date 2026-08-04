@@ -1,0 +1,19 @@
+{
+  "id": "enrich_02_missing_brand",
+  "usecase": "product_enrichment",
+  "title": "Abrasive record missing the required brand field -> human review",
+  "input_json": {
+    "name": "cutting disc 125mm",
+    "uom": "pcs",
+    "unit_price_eur": "0,79",
+    "description": "125mm metal cutting disc inox"
+  },
+  "expect": {
+    "stopped": "answered",
+    "category": "abrasives",
+    "valid": false,
+    "missing_fields": ["brand"],
+    "issues": [],
+    "final_contains": "needs human review"
+  }
+}

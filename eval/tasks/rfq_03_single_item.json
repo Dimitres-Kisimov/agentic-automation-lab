@@ -1,0 +1,15 @@
+{
+  "id": "rfq_03_single_item",
+  "usecase": "rfq_intake",
+  "title": "Single-line order, low-value fastener",
+  "input": "From: workshop@meier-bau.de\nSubject: small order\n\n25 x hex nut M8 zinc\n",
+  "expect": {
+    "stopped": "answered",
+    "customer": "workshop@meier-bau.de",
+    "n_line_items": 1,
+    "skus": ["FAS-NUT-08"],
+    "flagged_count": 0,
+    "total_eur": 3.0,
+    "final_contains": "1 line item(s)"
+  }
+}

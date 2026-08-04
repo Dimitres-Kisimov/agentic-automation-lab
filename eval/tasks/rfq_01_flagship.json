@@ -1,0 +1,15 @@
+{
+  "id": "rfq_01_flagship",
+  "usecase": "rfq_intake",
+  "title": "Flagship 5-line spring order, every item in catalog",
+  "input_file": "data/sample_emails/rfq_01.txt",
+  "expect": {
+    "stopped": "answered",
+    "customer": "procurement@acme-bau.de",
+    "n_line_items": 5,
+    "skus": ["FAS-0008-40", "PWR-IMP-18", "PPE-GLV-CR-L", "ABR-CUT-125", "HND-WRN-SET"],
+    "flagged_count": 0,
+    "total_eur": 911.44,
+    "final_contains": "5 line item(s)"
+  }
+}

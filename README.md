@@ -24,9 +24,10 @@ Averages across nine dimensions came out full-code 4.44, n8n 3.33, Power Automat
 pip install -e ".[dev,charts]"
 
 python -m agentic_lab rfq_intake      # watch the tool-use loop run
-pytest -q                             # 25 tests, no key needed
+pytest -q                             # 29 tests, no key needed
 python benchmarks/run_benchmark.py    # regenerate the scorecard + charts
 python eval/agent_eval.py             # guardrail eval: 20 adversarial/happy cases
+python eval/task_success.py           # task-success eval: 9 offline task fixtures
 ```
 
 A run against the mock provider looks like this (swap `--provider anthropic` for live Claude):
@@ -93,6 +94,14 @@ False-trigger rate on the happy paths: **0/6**. End-task correctness: **20/20**.
 A fixed pattern list has no notion of intent, so it is documented here as a *screen*, not a security boundary. (With the deterministic mock the missed payloads are inert; against a real model they might not be.) Real deployments layer model-level defenses and human review on top of screens like this — as external context, Anthropic has published that in their browser-use red-teaming, prompt-injection attack success dropped from 23.6% to 11.2% with their safeguards enabled (their published figure, not something measured in this repo — and note it's a reduction, not zero).
 
 The loop guards are the harder backstop: whatever the text says, the agent cannot call an unregistered tool (rejected, never executed), cannot repeat the identical call three times (loop breaker), and cannot exceed the tool-call budget — all verified by the constructed-misbehaving-model cases above.
+
+## Measured task success
+
+The guardrails answer "does the agent stay safe?"; this answers the other half — "does the flow get the business task *right*?". `eval/task_success.py` runs the **existing** flows over 9 deterministic offline task fixtures (`eval/tasks/*.json`) — five RFQ orders and four product records — and scores the business outcome each flow actually produced against a hand-verified answer key: the resolved SKUs, the quote total to the cent, which lines were flagged for human review, and the enrichment verdict. It writes a CSV + Markdown scorecard ([eval/task_scorecard.md](eval/task_scorecard.md)) and prints the read.
+
+Current result: **9/9 tasks pass (100%)** — e.g. the flagship 5-line order resolves all five SKUs and totals 911.44 EUR; the off-catalog order flags the one item it can't match instead of guessing a SKU; the negative-price record is rejected by the sanity rule.
+
+**What that 100% is — and is not.** The flows run against the deterministic mock policy, so this measures **orchestration + tool correctness** (given the standard tool plan, does the flow resolve, price, flag and validate correctly?), *not* live-model task success. It's the ceiling the orchestration allows on a fixed model — it is **not** a claim that a real LLM drives these tasks to 100% end to end. Published end-to-end LLM computer-use is around ~70% reliable and carries prompt-injection risk (the stance this whole repo is built around — see *Measured guardrails* above). The harness excludes the hash-derived quote id, latency and token counts so re-runs are byte-identical.
 
 ## Honest limitations
 

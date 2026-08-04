@@ -1,0 +1,20 @@
+{
+  "id": "enrich_04_bad_price",
+  "usecase": "product_enrichment",
+  "title": "Negative price fails the sanity rule even though fields are present",
+  "input_json": {
+    "name": "silicone sealant",
+    "brand": "wuerth",
+    "uom": "pcs",
+    "unit_price_eur": "-4,90",
+    "description": "neutral silicone sealant 310ml transparent"
+  },
+  "expect": {
+    "stopped": "answered",
+    "category": "chemicals",
+    "valid": false,
+    "missing_fields": [],
+    "issues": ["unit_price_eur must be > 0"],
+    "final_contains": "unit_price_eur must be > 0"
+  }
+}

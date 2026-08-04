@@ -1,0 +1,15 @@
+{
+  "id": "rfq_02_offcatalog",
+  "usecase": "rfq_intake",
+  "title": "German 'item - qty' order with one off-catalog line flagged",
+  "input_file": "data/sample_emails/rfq_02.txt",
+  "expect": {
+    "stopped": "answered",
+    "customer": "einkauf@nordmetall-gmbh.de",
+    "n_line_items": 5,
+    "skus": ["CHM-SIL-310", "PWR-GRD-125", "ABR-FLP-125", "PPE-GOG-01", null],
+    "flagged_count": 1,
+    "total_eur": 501.6,
+    "final_contains": "need manual review"
+  }
+}

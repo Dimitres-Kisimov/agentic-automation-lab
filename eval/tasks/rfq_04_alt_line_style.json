@@ -1,0 +1,15 @@
+{
+  "id": "rfq_04_alt_line_style",
+  "usecase": "rfq_intake",
+  "title": "Two lines in 'description - qty' style, both resolved",
+  "input": "From: einkauf@schulz-kfz.de\nSubject: Werkstattbedarf\n\nbrake cleaner 500ml - 12\nscrewdriver set 6pc - 3\n",
+  "expect": {
+    "stopped": "answered",
+    "customer": "einkauf@schulz-kfz.de",
+    "n_line_items": 2,
+    "skus": ["CHM-CLN-500", "HND-SCR-SET"],
+    "flagged_count": 0,
+    "total_eur": 109.2,
+    "final_contains": "2 line item(s)"
+  }
+}

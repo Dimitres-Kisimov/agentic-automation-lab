@@ -1,0 +1,20 @@
+{
+  "id": "enrich_03_uncategorized",
+  "usecase": "product_enrichment",
+  "title": "Description gives no category hint -> flagged uncategorized",
+  "input_json": {
+    "name": "mystery widget",
+    "brand": "acme",
+    "uom": "pcs",
+    "unit_price_eur": "1,00",
+    "description": "a generic widget of unknown type"
+  },
+  "expect": {
+    "stopped": "answered",
+    "category": "uncategorized",
+    "valid": false,
+    "missing_fields": [],
+    "issues": ["category could not be determined"],
+    "final_contains": "category could not be determined"
+  }
+}

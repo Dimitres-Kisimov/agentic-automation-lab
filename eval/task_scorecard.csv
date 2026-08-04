@@ -1,0 +1,10 @@
+id,usecase,title,checks_passed,checks_total,result,notes
+enrich_01_ready,product_enrichment,Complete fastener record normalises clean and validates,6,6,PASS,
+enrich_02_missing_brand,product_enrichment,Abrasive record missing the required brand field -> human review,6,6,PASS,
+enrich_03_uncategorized,product_enrichment,Description gives no category hint -> flagged uncategorized,6,6,PASS,
+enrich_04_bad_price,product_enrichment,Negative price fails the sanity rule even though fields are present,6,6,PASS,
+rfq_01_flagship,rfq_intake,"Flagship 5-line spring order, every item in catalog",7,7,PASS,
+rfq_02_offcatalog,rfq_intake,German 'item - qty' order with one off-catalog line flagged,7,7,PASS,
+rfq_03_single_item,rfq_intake,"Single-line order, low-value fastener",7,7,PASS,
+rfq_04_alt_line_style,rfq_intake,"Two lines in 'description - qty' style, both resolved",7,7,PASS,
+rfq_05_all_offcatalog,rfq_intake,"Nothing resolves — both lines flagged, zero-value quote",7,7,PASS,

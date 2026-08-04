@@ -92,7 +92,8 @@ src/agentic_lab/       full-code agent: llm, agent, tools, catalog, tool_server,
 n8n/                   importable workflow JSON (low-code build) + how-to
 data/                  product_catalog.csv + sample RFQ emails
 benchmarks/            run_benchmark.py + committed results/ (metrics, scorecard, charts)
-tests/                 pytest: tools, agents (mock), n8n JSON structure
+eval/                  agent_eval.py (guardrails) + task_success.py (task-success) + fixtures & scorecards
+tests/                 pytest: tools, agents (mock), guardrails, both eval harnesses, n8n JSON structure
 docs/                  this file + evaluation framework, decision guide, PA comparison, use cases
 .github/workflows/     CI: ruff + pytest + CLI smoke + benchmark + JSON validation
 docker-compose.yml     self-hosted n8n + Postgres

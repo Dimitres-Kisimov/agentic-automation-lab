@@ -1,0 +1,20 @@
+{
+  "id": "enrich_01_ready",
+  "usecase": "product_enrichment",
+  "title": "Complete fastener record normalises clean and validates",
+  "input_json": {
+    "name": "  m8x40   HEX bolt  zinc ",
+    "brand": "wuerth",
+    "uom": "pieces",
+    "unit_price_eur": "0,89 EUR",
+    "description": "M8x40 hex head bolt, zinc plated, DIN 933"
+  },
+  "expect": {
+    "stopped": "answered",
+    "category": "fasteners",
+    "valid": true,
+    "missing_fields": [],
+    "issues": [],
+    "final_contains": "catalog-ready"
+  }
+}

@@ -7,7 +7,7 @@ Public surface:
     run = agent.run(rfq_intake.demo_input())
     print(run.final, run.summary())
 
-Author: Dimitres Kisimov · MIT.
+Author: Dimitres Kisimov. Proprietary — all rights reserved (see LICENSE).
 """
 from .agent import Agent, AgentRun, ToolRegistry
 from .llm import make_provider

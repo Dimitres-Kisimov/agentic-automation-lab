@@ -1,0 +1,510 @@
+{
+  "summary": {
+    "n_tasks": 9,
+    "passed": 9,
+    "failed": 0,
+    "success_rate": 1.0,
+    "provider": "mock (deterministic)",
+    "measures": "orchestration + tool correctness, not live-model task success"
+  },
+  "by_usecase": {
+    "product_enrichment": {
+      "tasks": 4,
+      "passed": 4
+    },
+    "rfq_intake": {
+      "tasks": 5,
+      "passed": 5
+    }
+  },
+  "tasks": [
+    {
+      "id": "enrich_01_ready",
+      "usecase": "product_enrichment",
+      "title": "Complete fastener record normalises clean and validates",
+      "stopped": "answered",
+      "n_checks": 6,
+      "n_passed": 6,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "category": "fasteners",
+        "valid": true,
+        "missing_fields": [],
+        "issues": []
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "category",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "valid",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "missing_fields",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "issues",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "enrich_02_missing_brand",
+      "usecase": "product_enrichment",
+      "title": "Abrasive record missing the required brand field -> human review",
+      "stopped": "answered",
+      "n_checks": 6,
+      "n_passed": 6,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "category": "abrasives",
+        "valid": false,
+        "missing_fields": [
+          "brand"
+        ],
+        "issues": []
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "category",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "valid",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "missing_fields",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "issues",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "enrich_03_uncategorized",
+      "usecase": "product_enrichment",
+      "title": "Description gives no category hint -> flagged uncategorized",
+      "stopped": "answered",
+      "n_checks": 6,
+      "n_passed": 6,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "category": "uncategorized",
+        "valid": false,
+        "missing_fields": [],
+        "issues": [
+          "category could not be determined"
+        ]
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "category",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "valid",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "missing_fields",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "issues",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "enrich_04_bad_price",
+      "usecase": "product_enrichment",
+      "title": "Negative price fails the sanity rule even though fields are present",
+      "stopped": "answered",
+      "n_checks": 6,
+      "n_passed": 6,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "category": "chemicals",
+        "valid": false,
+        "missing_fields": [],
+        "issues": [
+          "unit_price_eur must be > 0"
+        ]
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "category",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "valid",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "missing_fields",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "issues",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "rfq_01_flagship",
+      "usecase": "rfq_intake",
+      "title": "Flagship 5-line spring order, every item in catalog",
+      "stopped": "answered",
+      "n_checks": 7,
+      "n_passed": 7,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "customer": "procurement@acme-bau.de",
+        "n_line_items": 5,
+        "skus": [
+          "FAS-0008-40",
+          "PWR-IMP-18",
+          "PPE-GLV-CR-L",
+          "ABR-CUT-125",
+          "HND-WRN-SET"
+        ],
+        "flagged_count": 0,
+        "total_eur": 911.44
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "customer",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "n_line_items",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "skus",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "flagged_count",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "total_eur",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "rfq_02_offcatalog",
+      "usecase": "rfq_intake",
+      "title": "German 'item - qty' order with one off-catalog line flagged",
+      "stopped": "answered",
+      "n_checks": 7,
+      "n_passed": 7,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "customer": "einkauf@nordmetall-gmbh.de",
+        "n_line_items": 5,
+        "skus": [
+          "CHM-SIL-310",
+          "PWR-GRD-125",
+          "ABR-FLP-125",
+          "PPE-GOG-01",
+          null
+        ],
+        "flagged_count": 1,
+        "total_eur": 501.6
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "customer",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "n_line_items",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "skus",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "flagged_count",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "total_eur",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "rfq_03_single_item",
+      "usecase": "rfq_intake",
+      "title": "Single-line order, low-value fastener",
+      "stopped": "answered",
+      "n_checks": 7,
+      "n_passed": 7,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "customer": "workshop@meier-bau.de",
+        "n_line_items": 1,
+        "skus": [
+          "FAS-NUT-08"
+        ],
+        "flagged_count": 0,
+        "total_eur": 3.0
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "customer",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "n_line_items",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "skus",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "flagged_count",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "total_eur",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "rfq_04_alt_line_style",
+      "usecase": "rfq_intake",
+      "title": "Two lines in 'description - qty' style, both resolved",
+      "stopped": "answered",
+      "n_checks": 7,
+      "n_passed": 7,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "customer": "einkauf@schulz-kfz.de",
+        "n_line_items": 2,
+        "skus": [
+          "CHM-CLN-500",
+          "HND-SCR-SET"
+        ],
+        "flagged_count": 0,
+        "total_eur": 109.2
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "customer",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "n_line_items",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "skus",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "flagged_count",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "total_eur",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "rfq_05_all_offcatalog",
+      "usecase": "rfq_intake",
+      "title": "Nothing resolves \u2014 both lines flagged, zero-value quote",
+      "stopped": "answered",
+      "n_checks": 7,
+      "n_passed": 7,
+      "passed": true,
+      "failures": [],
+      "observed": {
+        "customer": "rnd@newco.io",
+        "n_line_items": 2,
+        "skus": [
+          null,
+          null
+        ],
+        "flagged_count": 2,
+        "total_eur": 0.0
+      },
+      "checks": [
+        {
+          "check": "stopped",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "customer",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "n_line_items",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "skus",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "flagged_count",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "total_eur",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "check": "final_contains",
+          "ok": true,
+          "detail": ""
+        }
+      ]
+    }
+  ]
+}
