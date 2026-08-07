@@ -1,0 +1,30 @@
+{
+  "as_of": "2026-06-24",
+  "currency": "USD",
+  "unit": "per_1M_tokens",
+  "source": "Anthropic published first-party API list prices (model catalog, cached 2026-06-24). List prices change and partner platforms (Amazon Bedrock, Google Vertex AI) price separately — verify before quoting.",
+  "provider_default_model": "claude-haiku-4-5",
+  "models": [
+    {
+      "id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "input": 1.0,
+      "output": 5.0,
+      "note": "the provider default in src/agentic_lab/llm.py (AnthropicProvider) — the headline model here"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "name": "Claude Sonnet 5",
+      "input": 3.0,
+      "output": 15.0,
+      "note": "standard list price; a $2.00/$10.00 introductory rate applied through 2026-08-31 (not used in these figures)"
+    },
+    {
+      "id": "claude-opus-4-8",
+      "name": "Claude Opus 4.8",
+      "input": 5.0,
+      "output": 25.0,
+      "note": "most capable Opus tier"
+    }
+  ]
+}

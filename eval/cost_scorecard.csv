@@ -1,0 +1,10 @@
+id,usecase,input_tokens,output_tokens,tool_calls,steps,total_usd_claude-haiku-4-5,total_usd_claude-sonnet-5,total_usd_claude-opus-4-8
+enrich_01_ready,product_enrichment,889,131,3,4,0.001544,0.004632,0.007720
+enrich_02_missing_brand,product_enrichment,786,128,3,4,0.001426,0.004278,0.007130
+enrich_03_uncategorized,product_enrichment,819,135,3,4,0.001494,0.004482,0.007470
+enrich_04_bad_price,product_enrichment,878,133,3,4,0.001543,0.004629,0.007715
+rfq_01_flagship,rfq_intake,13067,503,12,13,0.015582,0.046746,0.077910
+rfq_02_offcatalog,rfq_intake,11976,522,12,13,0.014586,0.043758,0.072930
+rfq_03_single_item,rfq_intake,1344,182,4,5,0.002254,0.006762,0.011270
+rfq_04_alt_line_style,rfq_intake,2945,263,6,7,0.004260,0.012780,0.021300
+rfq_05_all_offcatalog,rfq_intake,2589,285,6,7,0.004014,0.012042,0.020070

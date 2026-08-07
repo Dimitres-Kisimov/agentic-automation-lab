@@ -24,10 +24,11 @@ Averages across nine dimensions came out full-code 4.44, n8n 3.33, Power Automat
 pip install -e ".[dev,charts]"
 
 python -m agentic_lab rfq_intake      # watch the tool-use loop run
-pytest -q                             # 29 tests, no key needed
+pytest -q                             # 35 tests, no key needed
 python benchmarks/run_benchmark.py    # regenerate the scorecard + charts
 python eval/agent_eval.py             # guardrail eval: 20 adversarial/happy cases
 python eval/task_success.py           # task-success eval: 9 offline task fixtures
+python eval/cost_model.py             # token & cost model: unit economics of the flows
 ```
 
 A run against the mock provider looks like this (swap `--provider anthropic` for live Claude):
@@ -103,6 +104,21 @@ Current result: **9/9 tasks pass (100%)** — e.g. the flagship 5-line order res
 
 **What that 100% is — and is not.** The flows run against the deterministic mock policy, so this measures **orchestration + tool correctness** (given the standard tool plan, does the flow resolve, price, flag and validate correctly?), *not* live-model task success. It's the ceiling the orchestration allows on a fixed model — it is **not** a claim that a real LLM drives these tasks to 100% end to end. Published end-to-end LLM computer-use is around ~70% reliable and carries prompt-injection risk (the stance this whole repo is built around — see *Measured guardrails* above). The harness excludes the hash-derived quote id, latency and token counts so re-runs are byte-identical.
 
+## Token & cost model
+
+The task-success eval says the flow gets the *task* right; this one says what running it *costs*. `eval/cost_model.py` runs the **existing** flows over the **same** 9 task fixtures, reads the token counts the agent already instruments, prices them against a dated per-model sheet (`eval/pricing.json`), and derives the unit economics — cost per quote, cost per 1,000 runs, and an annual projection at the business-case volume. It writes a byte-stable JSON + Markdown + CSV ([eval/cost_scorecard.md](eval/cost_scorecard.md)).
+
+Headline, at published list prices as of 2026-06-24 (USD), on the provider default model (Claude Haiku 4.5, `$1/$5` per 1M tokens):
+
+| flow | mock-est. tokens (in / out, mean) | Haiku 4.5 / 1k runs | Sonnet 5 / 1k runs | Opus 4.8 / 1k runs |
+|---|---|--:|--:|--:|
+| rfq_intake | 6,384 / 351 | $8.14 | $24.42 | $40.70 |
+| product_enrichment | 843 / 132 | $1.50 | $4.50 | $7.51 |
+
+Projected onto the RFQ business volume (~2,000 emails/week, ~104,000/year), the token cost of running the flagship agent is **~$846/year on Haiku, ~$4,232/year on Opus 4.8** — a rounding error next to the ~€625k of labour the business case says it offsets, and that's *before* prompt caching.
+
+**What this is — and is not.** Tokens are the **deterministic mock's chars/4 estimate** (`llm.py`), *not* a real tokenizer, so this is an order-of-magnitude planning model of the loop's shape — **not a bill**. Real token counts and cost only appear under `LLM_PROVIDER=anthropic`. **No prompt caching** is modelled: the loop resends the full transcript each turn, so the input tokens are the *uncached*, expensive case (caching bills cached input at ~0.1x and would cut the RFQ input cost materially). **Latency is excluded** — it's non-deterministic (measured instead in `benchmarks/run_benchmark.py`). List prices change and partner platforms (Bedrock/Vertex) price separately. The harness excludes wall-clock and the hash-derived quote id, so re-runs are byte-identical (verified even under `PYTHONHASHSEED=random`).
+
 ## Honest limitations
 
 - The mock proves control flow and results. Real token cost and latency only show up under `LLM_PROVIDER=anthropic`.
@@ -111,7 +127,7 @@ Current result: **9/9 tasks pass (100%)** — e.g. the flagship 5-line order res
 
 ## What I'd add next
 
-A parallel n8n run against the *same* emails so I can put measured latency and cost side by side with the Python path, instead of scoring that dimension by judgement.
+The token & cost model above prices the Python path, but against the *mock's* token estimate. The next step is to re-run the flagship flow under `LLM_PROVIDER=anthropic` with real `count_tokens`, then a parallel n8n run against the *same* emails — so measured latency and real-tokenizer cost sit side by side with the Python path, instead of scoring that dimension by judgement.
 
 ---
 

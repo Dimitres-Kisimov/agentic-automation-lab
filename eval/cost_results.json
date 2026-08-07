@@ -1,0 +1,320 @@
+{
+  "summary": {
+    "n_tasks": 9,
+    "provider": "mock (deterministic)",
+    "currency": "USD",
+    "price_sheet_as_of": "2026-06-24",
+    "provider_default_model": "claude-haiku-4-5",
+    "token_basis": "mock chars/4 estimate (llm.py) \u2014 NOT a real tokenizer; real cost only under LLM_PROVIDER=anthropic",
+    "caching": "no prompt caching modelled (uncached loop; input tokens resend the full transcript each turn)",
+    "latency": "excluded (non-deterministic); measured in benchmarks/run_benchmark.py"
+  },
+  "models": [
+    {
+      "id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "input": 1.0,
+      "output": 5.0,
+      "note": "the provider default in src/agentic_lab/llm.py (AnthropicProvider) \u2014 the headline model here"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "name": "Claude Sonnet 5",
+      "input": 3.0,
+      "output": 15.0,
+      "note": "standard list price; a $2.00/$10.00 introductory rate applied through 2026-08-31 (not used in these figures)"
+    },
+    {
+      "id": "claude-opus-4-8",
+      "name": "Claude Opus 4.8",
+      "input": 5.0,
+      "output": 25.0,
+      "note": "most capable Opus tier"
+    }
+  ],
+  "by_usecase": {
+    "product_enrichment": {
+      "runs": 4,
+      "mean_input_tokens": 843.0,
+      "mean_output_tokens": 131.8,
+      "total_input_tokens": 3372,
+      "total_output_tokens": 527,
+      "mean_cost_per_run": {
+        "claude-haiku-4-5": 0.001502,
+        "claude-sonnet-5": 0.004505,
+        "claude-opus-4-8": 0.007509
+      },
+      "cost_per_1000_runs": {
+        "claude-haiku-4-5": 1.502,
+        "claude-sonnet-5": 4.505,
+        "claude-opus-4-8": 7.509
+      }
+    },
+    "rfq_intake": {
+      "runs": 5,
+      "mean_input_tokens": 6384.2,
+      "mean_output_tokens": 351.0,
+      "total_input_tokens": 31921,
+      "total_output_tokens": 1755,
+      "mean_cost_per_run": {
+        "claude-haiku-4-5": 0.008139,
+        "claude-sonnet-5": 0.024418,
+        "claude-opus-4-8": 0.040696
+      },
+      "cost_per_1000_runs": {
+        "claude-haiku-4-5": 8.139,
+        "claude-sonnet-5": 24.418,
+        "claude-opus-4-8": 40.696
+      }
+    }
+  },
+  "projections": [
+    {
+      "usecase": "rfq_intake",
+      "runs_per_week": 2000,
+      "runs_per_year": 104000,
+      "basis": "README business case: ~2,000 RFQ/order emails a week (~104,000/year).",
+      "annual_cost": {
+        "claude-haiku-4-5": 846.46,
+        "claude-sonnet-5": 2539.47,
+        "claude-opus-4-8": 4232.38
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "enrich_01_ready",
+      "usecase": "product_enrichment",
+      "title": "Complete fastener record normalises clean and validates",
+      "input_tokens": 889,
+      "output_tokens": 131,
+      "tool_calls": 3,
+      "steps": 4,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.000889,
+          "output": 0.000655,
+          "total": 0.001544
+        },
+        "claude-sonnet-5": {
+          "input": 0.002667,
+          "output": 0.001965,
+          "total": 0.004632
+        },
+        "claude-opus-4-8": {
+          "input": 0.004445,
+          "output": 0.003275,
+          "total": 0.00772
+        }
+      }
+    },
+    {
+      "id": "enrich_02_missing_brand",
+      "usecase": "product_enrichment",
+      "title": "Abrasive record missing the required brand field -> human review",
+      "input_tokens": 786,
+      "output_tokens": 128,
+      "tool_calls": 3,
+      "steps": 4,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.000786,
+          "output": 0.00064,
+          "total": 0.001426
+        },
+        "claude-sonnet-5": {
+          "input": 0.002358,
+          "output": 0.00192,
+          "total": 0.004278
+        },
+        "claude-opus-4-8": {
+          "input": 0.00393,
+          "output": 0.0032,
+          "total": 0.00713
+        }
+      }
+    },
+    {
+      "id": "enrich_03_uncategorized",
+      "usecase": "product_enrichment",
+      "title": "Description gives no category hint -> flagged uncategorized",
+      "input_tokens": 819,
+      "output_tokens": 135,
+      "tool_calls": 3,
+      "steps": 4,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.000819,
+          "output": 0.000675,
+          "total": 0.001494
+        },
+        "claude-sonnet-5": {
+          "input": 0.002457,
+          "output": 0.002025,
+          "total": 0.004482
+        },
+        "claude-opus-4-8": {
+          "input": 0.004095,
+          "output": 0.003375,
+          "total": 0.00747
+        }
+      }
+    },
+    {
+      "id": "enrich_04_bad_price",
+      "usecase": "product_enrichment",
+      "title": "Negative price fails the sanity rule even though fields are present",
+      "input_tokens": 878,
+      "output_tokens": 133,
+      "tool_calls": 3,
+      "steps": 4,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.000878,
+          "output": 0.000665,
+          "total": 0.001543
+        },
+        "claude-sonnet-5": {
+          "input": 0.002634,
+          "output": 0.001995,
+          "total": 0.004629
+        },
+        "claude-opus-4-8": {
+          "input": 0.00439,
+          "output": 0.003325,
+          "total": 0.007715
+        }
+      }
+    },
+    {
+      "id": "rfq_01_flagship",
+      "usecase": "rfq_intake",
+      "title": "Flagship 5-line spring order, every item in catalog",
+      "input_tokens": 13067,
+      "output_tokens": 503,
+      "tool_calls": 12,
+      "steps": 13,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.013067,
+          "output": 0.002515,
+          "total": 0.015582
+        },
+        "claude-sonnet-5": {
+          "input": 0.039201,
+          "output": 0.007545,
+          "total": 0.046746
+        },
+        "claude-opus-4-8": {
+          "input": 0.065335,
+          "output": 0.012575,
+          "total": 0.07791
+        }
+      }
+    },
+    {
+      "id": "rfq_02_offcatalog",
+      "usecase": "rfq_intake",
+      "title": "German 'item - qty' order with one off-catalog line flagged",
+      "input_tokens": 11976,
+      "output_tokens": 522,
+      "tool_calls": 12,
+      "steps": 13,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.011976,
+          "output": 0.00261,
+          "total": 0.014586
+        },
+        "claude-sonnet-5": {
+          "input": 0.035928,
+          "output": 0.00783,
+          "total": 0.043758
+        },
+        "claude-opus-4-8": {
+          "input": 0.05988,
+          "output": 0.01305,
+          "total": 0.07293
+        }
+      }
+    },
+    {
+      "id": "rfq_03_single_item",
+      "usecase": "rfq_intake",
+      "title": "Single-line order, low-value fastener",
+      "input_tokens": 1344,
+      "output_tokens": 182,
+      "tool_calls": 4,
+      "steps": 5,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.001344,
+          "output": 0.00091,
+          "total": 0.002254
+        },
+        "claude-sonnet-5": {
+          "input": 0.004032,
+          "output": 0.00273,
+          "total": 0.006762
+        },
+        "claude-opus-4-8": {
+          "input": 0.00672,
+          "output": 0.00455,
+          "total": 0.01127
+        }
+      }
+    },
+    {
+      "id": "rfq_04_alt_line_style",
+      "usecase": "rfq_intake",
+      "title": "Two lines in 'description - qty' style, both resolved",
+      "input_tokens": 2945,
+      "output_tokens": 263,
+      "tool_calls": 6,
+      "steps": 7,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.002945,
+          "output": 0.001315,
+          "total": 0.00426
+        },
+        "claude-sonnet-5": {
+          "input": 0.008835,
+          "output": 0.003945,
+          "total": 0.01278
+        },
+        "claude-opus-4-8": {
+          "input": 0.014725,
+          "output": 0.006575,
+          "total": 0.0213
+        }
+      }
+    },
+    {
+      "id": "rfq_05_all_offcatalog",
+      "usecase": "rfq_intake",
+      "title": "Nothing resolves \u2014 both lines flagged, zero-value quote",
+      "input_tokens": 2589,
+      "output_tokens": 285,
+      "tool_calls": 6,
+      "steps": 7,
+      "cost_per_run": {
+        "claude-haiku-4-5": {
+          "input": 0.002589,
+          "output": 0.001425,
+          "total": 0.004014
+        },
+        "claude-sonnet-5": {
+          "input": 0.007767,
+          "output": 0.004275,
+          "total": 0.012042
+        },
+        "claude-opus-4-8": {
+          "input": 0.012945,
+          "output": 0.007125,
+          "total": 0.02007
+        }
+      }
+    }
+  ]
+}
